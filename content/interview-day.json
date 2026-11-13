@@ -1,0 +1,25 @@
+{
+  "title": "Interview day",
+  "subtitle": "Run through this the evening before and the morning of.",
+  "sections": [
+    { "title": "Evening before", "items": [
+      "Re-read the job description and underline 3 things they care about",
+      "Use the product for 15 minutes and write down 2 improvements",
+      "Rehearse your 'Tell me about yourself' out loud (under 2 minutes)",
+      "Pick 6 STAR stories and map each to a question type",
+      "Prepare 3 questions to ask the interviewer"
+    ]},
+    { "title": "Morning of", "items": [
+      "Check the company's latest news or launches",
+      "Do one guesstimate warm-up out loud",
+      "Pen, paper and water within reach",
+      "Test camera, mic and internet 15 minutes early"
+    ]},
+    { "title": "In the room", "items": [
+      "Clarify the question before answering",
+      "Say your structure out loud before going deep",
+      "Pick one option and justify it",
+      "Close with metrics and risks"
+    ]}
+  ]
+}

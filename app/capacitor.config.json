@@ -1,0 +1,9 @@
+{
+  "appId": "io.github.aganyabajaj.pmnuggets",
+  "appName": "PM Nuggets",
+  "webDir": "www",
+  "android": { "allowMixedContent": false },
+  "plugins": {
+    "LocalNotifications": { "smallIcon": "ic_stat_pm", "iconColor": "#F2BB2E" }
+  }
+}

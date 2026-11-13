@@ -1,0 +1,81 @@
+name: Build Android app
+
+# Builds the APK whenever the app shell changes and publishes it as the latest release.
+# Content changes (content/**) don't need a new APK: the app syncs them itself.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - ".github/workflows/build-apk.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install and copy web app into Android
+        working-directory: app
+        run: |
+          npm ci
+          rm -rf www/content && cp -r ../content www/content
+          npx cap sync android
+
+      # The signing key lives in repo secrets, never in the repo.
+      # Without the secrets, a throwaway key is used: the APK installs fine,
+      # but a later APK can't update it in place (uninstall first).
+      - name: Prepare signing key
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          KS="$RUNNER_TEMP/release.keystore"
+          if [ -n "$KS_B64" ] && [ -n "$KS_PASS" ]; then
+            echo "$KS_B64" | base64 -d > "$KS"
+            PASS="$KS_PASS"
+          else
+            PASS="$(openssl rand -hex 16)"
+            keytool -genkeypair -keystore "$KS" -alias pmnuggets -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass "$PASS" -keypass "$PASS" -dname "CN=PM Nuggets" >/dev/null
+            echo "::warning::No signing secrets set. Built with a throwaway key, so this APK can't update an older install in place."
+          fi
+          echo "::add-mask::$PASS"
+          echo "KEYSTORE_PATH=$KS" >> "$GITHUB_ENV"
+          echo "KEYSTORE_PASSWORD=$PASS" >> "$GITHUB_ENV"
+
+      - name: Build signed APK
+        working-directory: app/android
+        env:
+          APP_VERSION_CODE: ${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/pm-nuggets.apk"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-${{ github.run_number }}
+          name: PM Nuggets 1.0.${{ github.run_number }}
+          body: |
+            Install on Android: download pm-nuggets.apk below and open it. Allow installing from your browser if asked.
+          files: pm-nuggets.apk
+          make_latest: true

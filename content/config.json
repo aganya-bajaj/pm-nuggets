@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "app": { "title": "PM Nuggets" },
+  "tabs": [
+    { "id": "nuggets", "title": "Nuggets", "icon": "cards", "type": "deck", "source": "nuggets.json" },
+    { "id": "interview-day", "title": "Checklist", "icon": "check", "type": "checklist", "source": "interview-day.json" }
+  ],
+  "reminders": [
+    {
+      "id": "nightly",
+      "enabled": true,
+      "time": "23:00",
+      "title": "2 min of PM prep",
+      "body": "Tonight: {next}",
+      "tab": "nuggets"
+    }
+  ]
+}

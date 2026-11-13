@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PM Nuggets</title>
+<meta name="theme-color" content="#16213a">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<main id="view" class="view"></main>
+
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+
+<div class="reader" id="reader" hidden>
+  <div class="rtop"><div class="in">
+    <button class="x" id="closeBtn">← Back</button>
+    <span class="tag" id="rTag"></span>
+    <span class="timer" id="timer">2:00</span>
+  </div></div>
+  <div class="wrap rbody" id="rBody"></div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="vendor/capacitor.js"></script>
+<script src="vendor/marked.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
