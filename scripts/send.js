@@ -4,9 +4,13 @@ const N = require("../nuggets.json");
 
 const CAT = { sense: "Product Sense", metrics: "Metrics", strategy: "Strategy", exec: "Execution", est: "Estimation", behav: "Behavioral" };
 const pub = process.env.VAPID_PUBLIC_KEY, priv = process.env.VAPID_PRIVATE_KEY;
+// Phone subscriptions live in subscriptions.json. They're useless without the
+// private key, which stays in the VAPID_PRIVATE_KEY secret.
 let subs = [];
-try { const s = JSON.parse(process.env.PUSH_SUBSCRIPTIONS || "[]"); subs = Array.isArray(s) ? s : [s]; }
-catch (e) { console.error("PUSH_SUBSCRIPTIONS is not valid JSON"); process.exit(1); }
+try { subs = require("../subscriptions.json"); } catch (e) {}
+try { const s = JSON.parse(process.env.PUSH_SUBSCRIPTIONS || "[]"); subs = subs.concat(Array.isArray(s) ? s : [s]); }
+catch (e) { console.error("PUSH_SUBSCRIPTIONS is not valid JSON"); }
+if (!priv) { console.error("Add the VAPID_PRIVATE_KEY secret in Settings > Secrets and variables > Actions."); process.exit(1); }
 if (!subs.length) { console.log("No subscriptions saved yet. Nothing to send."); process.exit(0); }
 
 webpush.setVapidDetails("mailto:pm-nuggets@users.noreply.github.com", pub, priv);
