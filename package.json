@@ -1,0 +1,13 @@
+{
+  "name": "pm-nuggets",
+  "version": "1.0.0",
+  "description": "PM Prep Nuggets PWA",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web-push": "^3.6.7"
+  },
+  "private": true
+}

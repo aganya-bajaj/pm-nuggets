@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PM Prep Nuggets</title>
+<meta name="theme-color" content="#16213a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PM Nuggets">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="wrap" id="home">
+  <h1>PM Prep Nuggets</h1>
+  <p class="sub">35 two-minute reads for PM interviews. One framework, one example, one drill each.</p>
+
+  <section class="remind" id="remind" aria-live="polite">
+    <div class="row">
+      <span class="bell" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
+      <div><div class="h" id="rH">Nightly reminder at 11 PM</div><div class="s" id="rS">One nugget, every night.</div></div>
+      <span class="on-pill" id="rPill" hidden>On</span>
+    </div>
+    <div id="rBodyBox"></div>
+  </section>
+
+  <div class="prog"><div class="bar"><i id="barFill"></i></div><b id="count">0/35</b></div>
+  <button class="next" id="nextBtn"><span id="nextLbl">Start: first nugget</span><span>→</span></button>
+  <div class="chips" id="chips" role="toolbar" aria-label="Filter by topic"></div>
+  <div class="list" id="list"></div>
+</div>
+
+<div class="reader" id="reader" hidden>
+  <div class="rtop"><div class="in">
+    <button class="x" id="closeBtn">← All</button>
+    <span class="tag" id="rTag"></span>
+    <span class="timer" id="timer">2:00</span>
+  </div></div>
+  <div class="wrap rbody" id="rBody"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
