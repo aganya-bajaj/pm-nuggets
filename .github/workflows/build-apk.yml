@@ -30,8 +30,6 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
-
       - name: Install and copy web app into Android
         working-directory: app
         run: |
